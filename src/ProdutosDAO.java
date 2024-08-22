@@ -61,4 +61,65 @@ public class ProdutosDAO {
             return listagem;
         }
     }
+
+    public Boolean venderProduto(int id) {
+        String selectSql = "SELECT * FROM produtos WHERE id = ?";
+        String updateSql = "UPDATE produtos SET nome = ? WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement prepSelect = null;
+        PreparedStatement prepUpdate = null;
+        ResultSet resultSet = null;
+        Boolean sucesso = false;
+
+        try {
+            // Estabelecendo a conexão com o banco de dados
+            conn = new conectaDAO().connectDB();
+
+            // Preparando a instrução SQL para seleção
+            prepSelect = conn.prepareStatement(selectSql);
+            prepSelect.setInt(1, id);
+
+            // Executando a consulta
+            resultSet = prepSelect.executeQuery();
+
+            // Verificando se o produto existe
+            if (resultSet.next()) {
+                // Preparando a instrução SQL para atualização
+                prepUpdate = conn.prepareStatement(updateSql);
+                prepUpdate.setString(1, "Vendido"); // Modificando o nome para "Vendido"
+                prepUpdate.setInt(2, id);
+
+                // Executando a atualização
+                int rowsAffected = prepUpdate.executeUpdate();
+
+                // Verificando se a atualização foi bem-sucedida
+                if (rowsAffected > 0) {
+                    sucesso = true;
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao vender produto: " + e.getMessage());
+        } finally {
+            // Fechando recursos
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (prepSelect != null) {
+                    prepSelect.close();
+                }
+                if (prepUpdate != null) {
+                    prepUpdate.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão: " + ex.getMessage());
+            }
+        }
+
+        return sucesso;
+    }
+
 }
