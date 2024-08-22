@@ -144,8 +144,8 @@ public class listagemVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        //vendasVIEW vendas = new vendasVIEW(); 
-        //vendas.setVisible(true);
+        TelaVendido vendas = new TelaVendido();
+        vendas.setVisible(true);
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -187,19 +187,6 @@ public class listagemVIEW extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnVendas;
-    private javax.swing.JButton btnVender;
-    private javax.swing.JButton btnVoltar;
-    private javax.swing.JTextPane id_produto_venda;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable listaProdutos;
-    // End of variables declaration//GEN-END:variables
-
     private void listarProdutos() {
         try {
             ProdutosDAO produtosdao = new ProdutosDAO();
@@ -221,4 +208,17 @@ public class listagemVIEW extends javax.swing.JFrame {
         }
 
     }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVendas;
+    private javax.swing.JButton btnVender;
+    private javax.swing.JButton btnVoltar;
+    private javax.swing.JTextPane id_produto_venda;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable listaProdutos;
+    // End of variables declaration//GEN-END:variables
+
 }

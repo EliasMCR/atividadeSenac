@@ -66,7 +66,7 @@ public class ProdutosDAO {
     
     public Boolean venderProduto(int id) {
         String selectSql = "SELECT * FROM produtos WHERE id = ?";
-        String updateSql = "UPDATE produtos SET nome = ? WHERE id = ?";
+        String updateSql = "UPDATE produtos SET status = ? WHERE id = ?";
         PreparedStatement prepSelect = null;
         PreparedStatement prepUpdate = null;
         Boolean sucesso = false;
