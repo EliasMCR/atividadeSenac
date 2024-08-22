@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class listagemVIEW extends javax.swing.JFrame {
@@ -127,12 +128,19 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
-        
-        ProdutosDAO produtosdao = new ProdutosDAO();
-        
-        //produtosdao.venderProduto(Integer.parseInt(id));
-        listarProdutos();
+        try {
+            int id = Integer.parseInt(id_produto_venda.getText());
+
+            ProdutosDAO produtosdao = new ProdutosDAO();
+
+            if (produtosdao.venderProduto(id)) {
+                JOptionPane.showMessageDialog(null, "Vendido com sucesso");
+                listarProdutos();
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Verifique a digitação e tente novamente");
+        }
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
@@ -192,16 +200,16 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JTable listaProdutos;
     // End of variables declaration//GEN-END:variables
 
-    private void listarProdutos(){
+    private void listarProdutos() {
         try {
             ProdutosDAO produtosdao = new ProdutosDAO();
-            
+
             DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
             model.setNumRows(0);
-            
+
             ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
-            
-            for(int i = 0; i < listagem.size(); i++){
+
+            for (int i = 0; i < listagem.size(); i++) {
                 model.addRow(new Object[]{
                     listagem.get(i).getId(),
                     listagem.get(i).getNome(),
@@ -211,6 +219,6 @@ public class listagemVIEW extends javax.swing.JFrame {
             }
         } catch (Exception e) {
         }
-    
+
     }
 }

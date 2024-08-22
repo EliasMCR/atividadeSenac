@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 
 public class ProdutosDAO {
-
+    
     Connection conn;
     PreparedStatement prep;
     ResultSet resultSet;
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
-
+    
     public void cadastrarProduto(ProdutosDTO produto) {
         String sql = "INSERT INTO produtos (nome, valor, status)VALUES (?,?,?)";
         conn = new conectaDAO().connectDB();
@@ -36,12 +36,13 @@ public class ProdutosDAO {
             }
         }
     }
-
+    
     public ArrayList<ProdutosDTO> listarProdutos() {
-        String sql = "SELECT * FROM produtos";
+        String sql = "SELECT * FROM produtos WHERE status = ?";
         try {
             conn = new conectaDAO().connectDB();
             prep = conn.prepareStatement(sql);
+            prep.setString(1, "A Venda");
             resultSet = prep.executeQuery();
             while (resultSet.next()) {
                 ProdutosDTO produto = new ProdutosDTO();
@@ -62,14 +63,14 @@ public class ProdutosDAO {
             return listagem;
         }
     }
-
+    
     public Boolean venderProduto(int id) {
         String selectSql = "SELECT * FROM produtos WHERE id = ?";
         String updateSql = "UPDATE produtos SET nome = ? WHERE id = ?";
         PreparedStatement prepSelect = null;
         PreparedStatement prepUpdate = null;
         Boolean sucesso = false;
-
+        
         try {
             // Estabelecendo a conexão com o banco de dados
             conn = new conectaDAO().connectDB();
@@ -117,14 +118,14 @@ public class ProdutosDAO {
                 JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão: " + ex.getMessage());
             }
         }
-
+        
         return sucesso;
     }
-
+    
     public ArrayList<ProdutosDTO> listarProdutosVendidos() {
         String sql = "SELECT * FROM produtos WHERE status = ?";
         ArrayList<ProdutosDTO> listaVendido = new ArrayList<>();
-
+        
         try {
             // Estabelecendo a conexão com o banco de dados
             conn = new conectaDAO().connectDB();
@@ -163,8 +164,8 @@ public class ProdutosDAO {
                 JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão: " + ex.getMessage());
             }
         }
-
+        
         return listaVendido;
     }
-
+    
 }
